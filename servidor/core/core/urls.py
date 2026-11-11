@@ -14,9 +14,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# imports do django
 from django.contrib import admin
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
+
+# imports externos
+from spyne.application import Application
+from spyne.protocol.soap import Soap11
+from spyne.server.django import DjangoApplication
+
+# imports local
+from absenteismo.services import AbsenteismoService
+
+spyne_app = Application(
+    services=[AbsenteismoService],
+    tns = "absenteismo.soap",
+    in_protocol = Soap11(validator="lxml"),
+    out_protocol = Soap11()
+)
+
+django_spyne_app = DjangoApplication(spyne_app)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('soap/absenteismo/',csrf_exempt(django_spyne_app)),
 ]
