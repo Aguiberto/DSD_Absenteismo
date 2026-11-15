@@ -14,4 +14,4 @@ class AtestadoMedico(models.Model):
     criado_em = models.DateField(auto_now=True)
 
     def __str__(self):
-        return f"{self.nome} - CID {self.cid}, {self.dias_afastamento} dias"
+        return f"{self.nome_funcionario} - CID {self.cid}, {self.dias_afastamento} dias"
