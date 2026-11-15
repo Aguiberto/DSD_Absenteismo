@@ -1,0 +1,8 @@
+# Node / TypeScript
+node_modules/
+
+# Python / Django
+__pycache__/
+*.pyc
+.env
+db.sqlite3
