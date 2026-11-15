@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="absenteismo.soap" name="Application" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdlsoap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12env="http://www.w3.org/2003/05/soap-envelope" xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="absenteismo.soap">
+  <wsdl:types>
+    <xs:schema targetNamespace="absenteismo.soap" elementFormDefault="qualified">
+      <xs:complexType name="consultar_metricas_absenteismo"/>
+      <xs:complexType name="CidMetrica">
+        <xs:sequence>
+          <xs:element name="cid" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="quantidade" type="xs:integer" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RegistrarAtestadoResponse">
+        <xs:sequence>
+          <xs:element name="sucesso" type="xs:boolean" minOccurs="0" nillable="true"/>
+          <xs:element name="mensagem" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="id_atestado" type="xs:integer" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registrar_atestado">
+        <xs:sequence>
+          <xs:element name="cpf_funcionario" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="nome_funcionario" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="cid" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="dias_afastamento" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="data_emissao" type="xs:date" minOccurs="0" nillable="true"/>
+          <xs:element name="nome_medico" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="crm_medico" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CidMetricaArray">
+        <xs:sequence>
+          <xs:element name="CidMetrica" type="tns:CidMetrica" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registrar_atestadoResponse">
+        <xs:sequence>
+          <xs:element name="registrar_atestadoResult" type="tns:RegistrarAtestadoResponse" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MetricasAbsenteismoResponse">
+        <xs:sequence>
+          <xs:element name="total_atestados" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="total_dias_afastados" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="medias_dias_por_atestado" type="xs:float" minOccurs="0" nillable="true"/>
+          <xs:element name="top_cids" type="tns:CidMetricaArray" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultar_metricas_absenteismoResponse">
+        <xs:sequence>
+          <xs:element name="consultar_metricas_absenteismoResult" type="tns:MetricasAbsenteismoResponse" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="consultar_metricas_absenteismo" type="tns:consultar_metricas_absenteismo"/>
+      <xs:element name="CidMetrica" type="tns:CidMetrica"/>
+      <xs:element name="RegistrarAtestadoResponse" type="tns:RegistrarAtestadoResponse"/>
+      <xs:element name="registrar_atestado" type="tns:registrar_atestado"/>
+      <xs:element name="CidMetricaArray" type="tns:CidMetricaArray"/>
+      <xs:element name="registrar_atestadoResponse" type="tns:registrar_atestadoResponse"/>
+      <xs:element name="MetricasAbsenteismoResponse" type="tns:MetricasAbsenteismoResponse"/>
+      <xs:element name="consultar_metricas_absenteismoResponse" type="tns:consultar_metricas_absenteismoResponse"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="registrar_atestado">
+    <wsdl:part name="registrar_atestado" element="tns:registrar_atestado"/>
+  </wsdl:message>
+  <wsdl:message name="registrar_atestadoResponse">
+    <wsdl:part name="registrar_atestadoResponse" element="tns:registrar_atestadoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="consultar_metricas_absenteismo">
+    <wsdl:part name="consultar_metricas_absenteismo" element="tns:consultar_metricas_absenteismo"/>
+  </wsdl:message>
+  <wsdl:message name="consultar_metricas_absenteismoResponse">
+    <wsdl:part name="consultar_metricas_absenteismoResponse" element="tns:consultar_metricas_absenteismoResponse"/>
+  </wsdl:message>
+  <wsdl:service name="AbsenteismoService">
+    <wsdl:port name="Application" binding="tns:Application">
+      <wsdlsoap11:address location="http://localhost:8000/soap/absenteismo/"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="Application">
+    <wsdl:operation name="registrar_atestado" parameterOrder="registrar_atestado">
+      <wsdl:documentation>Registra um atestado médico no banco de dados</wsdl:documentation>
+      <wsdl:input name="registrar_atestado" message="tns:registrar_atestado"/>
+      <wsdl:output name="registrar_atestadoResponse" message="tns:registrar_atestadoResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="consultar_metricas_absenteismo" parameterOrder="consultar_metricas_absenteismo">
+      <wsdl:documentation>Consulta métricas consolidadas de absenteísmo e os 5 CIDs mais frequentes</wsdl:documentation>
+      <wsdl:input name="consultar_metricas_absenteismo" message="tns:consultar_metricas_absenteismo"/>
+      <wsdl:output name="consultar_metricas_absenteismoResponse" message="tns:consultar_metricas_absenteismoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Application" type="tns:Application">
+    <wsdlsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="registrar_atestado">
+      <wsdlsoap11:operation soapAction="registrar_atestado" style="document"/>
+      <wsdl:input name="registrar_atestado">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="registrar_atestadoResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultar_metricas_absenteismo">
+      <wsdlsoap11:operation soapAction="consultar_metricas_absenteismo" style="document"/>
+      <wsdl:input name="consultar_metricas_absenteismo">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="consultar_metricas_absenteismoResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>
