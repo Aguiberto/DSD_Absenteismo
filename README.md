@@ -129,6 +129,3 @@ A execução automatizada realiza três etapas em sequência:
 ## Decisões Técnicas e Arquiteturais
 
 * **Escolha do Protocolo SOAP:** Cenários corporativos de RH e sistemas ERP demandam contratos rígidos e tipagem forte para evitar inconsistências em registros trabalhistas e médicos. O esquema XSD embutido no WSDL garante validação estrutural antes mesmo da execução da regra de negócio, enquanto o padrão `SOAP Fault` uniformiza o tratamento de erros entre sistemas heterogêneos.
-* **Desafios Técnicos Superados:**
-  * **Proteção CSRF no Django:** Por padrão, o middleware do Django bloqueia requisições `POST` (`text/xml`) sem token de sessão. A rota SOAP foi isolada com o decorador `@csrf_exempt` e configurada com barra final (`/soap/absenteismo/`) para evitar redirecionamentos HTTP que descartam o corpo XML.
-  * **Compatibilidade de Ambiente:** O isolamento do servidor em Python 3.11 garantiu estabilidade para as bibliotecas internas de serialização XML e validação `lxml` utilizadas pelo Spyne.
