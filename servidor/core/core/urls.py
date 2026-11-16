@@ -28,6 +28,7 @@ from spyne.server.django import DjangoApplication
 # imports local
 from absenteismo.services import AbsenteismoService
 
+# Registra a classe de serviço SOAP e define os protocolos usados para ler e responder XML.
 spyne_app = Application(
     services=[AbsenteismoService],
     tns = "absenteismo.soap",
@@ -37,6 +38,7 @@ spyne_app = Application(
 
 django_spyne_app = DjangoApplication(spyne_app)
 
+# Publica o endpoint SOAP em /soap/absenteismo/; esse endereço também serve o WSDL com ?wsdl.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('soap/absenteismo/',csrf_exempt(django_spyne_app)),
